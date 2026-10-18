@@ -1,0 +1,16 @@
+{
+  "name": "@acedatacloud/gpt-image-by-ace-data-cloud",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Generate and edit GPT Image pictures through Ace Data Cloud, with async task retrieval.",
+  "keywords": [
+    "gpt image",
+    "gpt-image",
+    "image-generation",
+    "image-editing",
+    "qwen-code",
+    "acedatacloud"
+  ],
+  "license": "MIT",
+  "repository": "https://github.com/AceDataCloud/GPTImageQwenCode"
+}
