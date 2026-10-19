@@ -1,90 +1,73 @@
 # GPT Image by Ace Data Cloud — Qwen Code extension
 
-Generate and edit GPT Image pictures through Ace Data Cloud, with async task retrieval. A native Qwen extension with one service, its own credential prompt, and the existing hosted MCP implementation. No copied generation backend. Independently install/uninstall this service; the [Ace source catalog](https://github.com/AceDataCloud/AceDataCloudQwenCode) is optional.
+Generate and edit GPT Image pictures through Ace Data Cloud, and retrieve the original async task. This independent native extension runs the **existing dedicated GPT Image stdio profile** from the published `mcp-openai-pro==2026.10.19.5` package. It installs no other service and adds no LLM provider.
 
-**Source prerelease `0.1.0-rc.1`.** This is an independently installable source release, not an official Qwen listing or an authenticated-media general-availability release. The runtime prerequisite below remains unresolved in the official CLI.
+**Source prerelease `0.1.0-rc.2`.** RC1 used the general hosted OpenAI endpoint and four older tools. RC2 replaces that configuration with the published five-tool profile; it does not create a server or silently fall back to the general endpoint. Old RC1 tags are unchanged. This is not a default Qwen marketplace listing or a production-media GA claim.
 
-**Current runtime blocker (2026-10-18):** Qwen Code 0.25.2 installs and securely stores the sensitive setting, but its MCP loader does not read that stored value into HTTP Header references. See [upstream bug #14532](https://github.com/QwenLM/qwen-code/issues/14532). Do not treat install/Connected as authenticated use; this candidate is not ready for a real media request until the upstream fix is verified/released. No plaintext-Token workaround or paid retry is recommended.
+[简体中文](readme/README_zh_Hans.md) · [Register / sign in](https://platform.acedata.cloud/console/applications?utm_source=github&utm_medium=referral&utm_campaign=evergreen&utm_content=gptimageqwencode_readme_signup) · [Current pricing](https://platform.acedata.cloud/models?utm_source=github&utm_medium=referral&utm_campaign=evergreen&utm_content=gptimageqwencode_readme_pricing)
 
-[简体中文](readme/README_zh_Hans.md) · [Register / sign in](https://platform.acedata.cloud/console/applications?utm_source=github&utm_medium=referral&utm_campaign=evergreen&utm_content=gptimageqwencode_readme_signup) · [API and current pricing](https://platform.acedata.cloud/models?utm_source=github&utm_medium=referral&utm_campaign=evergreen&utm_content=gptimageqwencode_readme_pricing)
+## 1. Check the runtime and install
 
-## 1. Install using Qwen's extension installer
-
-Qwen Code0.25.2 and Node22 were tested for installation; real authenticated use still requires the fixed release described below. For installation and review, use the normal Git repository command:
+Install **Node.js 22+**, [uv](https://docs.astral.sh/uv/getting-started/installation/) (which provides `uvx`), and **Python 3.10+** available to uv. Package/dependency downloads need access to your approved Python package index. Check without using a credential:
 
 ```bash
-qwen extensions install AceDataCloud/GPTImageQwenCode
+uvx --from mcp-openai-pro==2026.10.19.5 mcp-openai-pro --version
+qwen extensions install AceDataCloud/GPTImageQwenCode --ref v0.1.0-rc.2
 ```
 
-To pin this source prerelease, use `qwen extensions install AceDataCloud/GPTImageQwenCode --ref v0.1.0-rc.1`. GitHub release notes and the tag identify the exact source commit. Inspect the source and installation summary before confirming the local extension installation. This does not register an Ace LLM provider.
+The native manifest launches `uvx --from mcp-openai-pro==2026.10.19.5 mcp-openai-pro --profile gpt-image`. Review its process and permissions before installing. It communicates with Qwen over local stdio; the package uses the existing Ace API for requested business operations. There is no dedicated hosted GPT Image profile at the general OpenAI URL. Do not replace this entry with that URL if a download or process launch fails.
 
-To discover by brand, add the public [Ace Qwen catalog](https://github.com/AceDataCloud/AceDataCloudQwenCode) using the source URL in its README, then open `/extensions manage` → **Discover** and search **GPT Image**. A user-added source is not a default Qwen marketplace listing.
+**Wait for an official Qwen release containing [fix #14544](https://github.com/QwenLM/qwen-code/pull/14544) to be verified before entering a real Token.** Official 0.25.2 is an installation baseline and may leave saved sensitive values unresolved in both server Header and environment references. On that unfixed CLI, use a synthetic placeholder and do not invoke business tools. A source-built repair-candidate check is not an official fixed release; changing to stdio does not remove this requirement.
 
-## Credential storage and verified platform boundary
+An optional [Ace catalog](https://github.com/AceDataCloud/AceDataCloudQwenCode) lets you search **GPT Image** after adding its source in `/extensions manage` → **Discover**. Its pinned version may lag this RC; use the explicit tag above for RC2. A user-added source is not a default listing.
 
-**Wait for an official Qwen release containing [fix #14544](https://github.com/QwenLM/qwen-code/pull/14544) before using this extension with a real Token.** Qwen0.25.2 is the installation baseline, not a fixed authenticated-runtime version. No fixed release version has been verified yet.
+## 2. Open General application and get an API Token
 
-The [current-head verification](https://github.com/AceDataCloud/qwen-code/actions/runs/39142135018) built exact upstream candidate `77b2196` and exercised saved settings through Qwen's real MCP transport to localhost, without forcing a backend. macOS/Windows each passed 26 checks; Linux passed 25 with its normal encrypted-file backend. These are candidate checks, not an official released fix:
-
-| Environment | Selected backend | Evidence |
-|---|---|---|
-| Windows Server2022 x64, Node22.23.3 | System credential store (`keychain` through keytar) | 26 checks PASS, including stored Token → extension Header → localhost initialize. This covers the hosted runner session, not every user's permission or lock state. |
-| Linux x64, Node22.23.3 | Qwen's normal `encrypted_file` fallback | 25 checks PASS. The runner's system Secret Service was unavailable; this does not validate Linux Keychain. |
-| macOS arm64, Node22.23.3 | Real system Keychain; follow-up 26 checks PASS | The original matrix failed at a workspace path alias. [Focused fix verification](https://github.com/AceDataCloud/qwen-code/actions/runs/39120588598) passes user/workspace/untrusted Header handshakes after canonical path identity. Current fix candidate is head77b2196; it remains unreleased. The old matrix failure stays recorded. |
-
-These additional Windows/Linux checks build core and use its real storage/manager/transport; they do not replace a full Windows/Linux interactive CLI test or prove a released fix. Existing macOS source-built CLI checks remain separately recorded.
-
-The installer records the selected backend in `.qwen-extension-settings.json`; no need to copy or expose the secret bundle. Qwen can normally choose encrypted-file storage when the OS backend is unavailable; that is encrypted storage, not a plaintext Token fallback. A missing/unreadable selected store after installation is a failure, not permission to switch credentials silently. The fix candidate keeps the extension manageable and disables its MCP servers on an unreadable store. Check store availability and retry/reload first; do not uninstall for a transient lock or unavailable backend. Only after missing/corrupt settings are confirmed should you back up recoverable settings and consider reinstalling. Reinstall can preserve existing workspace overrides; review and rotate scoped settings through hidden input if needed. Do not export the Token globally, force a different backend, put it in manifests/arguments, unlock a keychain or change OS permissions to work around this candidate's blocker.
-
-## 2. Register, sign in and get an API Token
-
-1. Open [Ace Data Cloud → Applications](https://platform.acedata.cloud/console/applications?utm_source=github&utm_medium=referral&utm_campaign=evergreen&utm_content=gptimageqwencode_readme_api_key). Register/sign in if needed. If no **General application** exists, choose **Initialize General Application**.
-2. Open **General application** and copy an existing API Key, or choose **Manage Keys → Create** for a dedicated key named `GPT Image Qwen Code`.
-3. Check GPT Image access, current price and balance; review expiration, usage limitation and Allowed APIs. If restricting APIs, include `/openai/images/generations`, `/openai/images/edits`, `/openai/tasks` as applicable to your selected operation. Permissions do not create balance or free generation.
+1. Open [Applications](https://platform.acedata.cloud/console/applications?utm_source=github&utm_medium=referral&utm_campaign=evergreen&utm_content=gptimageqwencode_readme_api_key) and register/sign in. If needed, choose **Initialize General Application**, then open **General application**.
+2. Copy an existing API Key or use **Manage Keys → Create** to create a dedicated `GPT Image Qwen Code` key.
+3. Check current GPT Image permissions, expiry, limits, price and balance. Restrict Allowed APIs to the operations you intend to use: `/openai/images/generations`, `/openai/images/edits` and `/openai/tasks`. Query permission does not grant generation permission or balance.
 
 ![Copy API Key or open Manage Keys](_assets/tutorial/get-api-key-en.png)
 
-![Create a separate integration key](_assets/tutorial/create-api-key-en.png)
+![Create a dedicated integration key](_assets/tutorial/create-api-key-en.png)
 
-These are real Ace application-page screenshots from the SunoDify onboarding source, pinned 2026-10-07; copied 2026-10-18. Keys are redacted. General application controls are shared; your account and entitlements differ.
+These are real redacted Ace application screenshots from the pinned SunoDify onboarding source dated 2026-10-07, copied 2026-10-18. They show shared application controls, not this extension's execution or your account entitlements.
 
-## 3. Paste into Qwen's sensitive extension setting
+## 3. Save the Token through native hidden input
 
-For this source prerelease on an unfixed official Qwen CLI, enter only a synthetic placeholder and do not invoke the hosted MCP. Once a fixed official release has been verified, Qwen asks for **Ace Data Cloud API Token**; paste only the raw Token, without `Bearer`, quotes or screenshot redaction characters. Qwen stores sensitive extension settings in its credential backend (keychain or encrypted-file fallback). This package stores only `$ACE_GPT_IMAGE_API_TOKEN` in the HTTP Header template, never a built-in customer Token. Do not paste a Token into chat or run `qwen mcp add` to duplicate this server.
+After the official fixed-runtime prerequisite is met, paste only the raw API Token into **Ace Data Cloud API Token**, without `Bearer` or quotes. Qwen owns its sensitive credential storage and naturally chooses keychain or encrypted-file storage. The manifest contains only `$ACE_GPT_IMAGE_API_TOKEN`; Qwen resolves it into the dedicated child process's `ACEDATACLOUD_API_TOKEN`. Never export the Token globally, put it in arguments/JSON/chat, force a backend or unlock a keychain to bypass a storage failure. A `platform-...` management token is not a business API Token.
 
-To rotate it later:
+To rotate it, run this command and enter the value only at its hidden prompt:
 
 ```bash
 qwen extensions settings set gpt-image-by-ace-data-cloud "Ace Data Cloud API Token"
 ```
 
-Use Qwen's interactive hidden input, not a command-line argument containing the key. `qwen extensions settings list gpt-image-by-ace-data-cloud` should show the setting masked. Restart an existing session, then open `/mcp` and confirm **gpt-image** is connected. Connection is not a successful API operation.
+`qwen extensions settings list gpt-image-by-ace-data-cloud` should mask the setting. Reload Qwen and inspect `/mcp`; no generation is required for setup. A missing/unreadable chosen store is a failure: restore its availability and retry before considering reinstall, preserving recoverable scoped settings. An installed or connected server alone does not prove key acceptance or business permissions.
 
-![Official Qwen historical terminal screenshot with manual-provider annotation](_assets/tutorial/qwen-provider-preview.png)
+## 4. Confirm five tools, then choose any business operation explicitly
 
-This is an official Qwen v0.18.2 screenshot edited on 2026-10-17, not an Ace run. It shows the native terminal and a separate custom-model setup entry, **not** the extension Token prompt. The current extension-settings screenshot is queued for capture; this image cannot prove this package installed or a paid request succeeded.
+Only these tools belong to the `gpt-image` server:
 
-## 4. First use, result and the same task ID
-
-A chat model is configured separately in Qwen. Inspect `openai_list_image_models` to list available GPT Image models without generating media. You can also ask Qwen to show the schemas of this extension's tools; an assistant response may consume your chat-model quota.
-
-When you choose to spend on media, specify your desired inputs, an explicitly chosen current model and budget, then authorize **one** `openai_generate_image` operation. It may return a `task_id` before completion. Poll `openai_get_task` with **id = that same task ID**. Never regenerate to poll. Do not fabricate an ID for a setup test.
-
-For a pending task, wait and retrieve the same ID again. For a failed task, preserve its error. Only present completed media after the terminal success and returned URL are verified. For GPT Image, `finished_at` means terminal even on failure: inspect `response.error` / `response.success` before treating it as a successful result; media result shapes vary by service. No paid result screenshot is claimed in this candidate.
-
-## Troubleshooting
-
-| Symptom | Action |
+| Tool | Purpose |
 |---|---|
-| Missing manifest/version | Confirm the repository and source tag; use the pinned release command above. |
-| 401 / 403 | Check raw API Token, service access, expiry and Allowed APIs. A `platform-...` management token is not a media API Token. |
-| Missing tools | Restart Qwen, check `/extensions manage` and `/mcp`; settings.json with the same MCP name overrides an extension. |
-| Permission declined in scripts | Non-interactive calls cannot ask for approval; authorize only the required tool. Never auto-trust the whole service. |
-| Pending / timeout | Query the original task ID. Do not retry generation automatically. |
-| 429 / failed | Respect the response and limits; no automatic model substitution or new paid retry. |
+| `gpt_image_generate` | Generate with an explicitly chosen GPT Image model; may be billed. |
+| `gpt_image_edit` | Edit with an explicitly chosen GPT Image model; may be billed. |
+| `gpt_image_get_task` | Retrieve the original task by its `id`. |
+| `gpt_image_list_tasks` | List tasks within your authorized account. |
+| `gpt_image_list_models` | List the profile's GPT Image model identifiers. |
 
-## Privacy, pricing and support
+The dedicated server and Qwen's exact `includeTools` list both limit this surface. It exposes no chat, audio, generic OpenAI image models or retired Sora tools. `initialize` / `tools/list` discover schemas without executing these tools. No model prompt, generation or edit is necessary for installation verification. Qwen's chat model is configured separately, and asking a model for help can itself consume quota.
 
-The extension is free source; existing Ace service requests may be charged. User-chosen inputs and your Token are sent over HTTPS to `openai.mcp.acedata.cloud` and the Ace API. See [Privacy](PRIVACY.md), [pricing](https://platform.acedata.cloud/models?utm_source=github&utm_medium=referral&utm_campaign=evergreen&utm_content=gptimageqwencode_readme_pricing) and [service documentation](https://platform.acedata.cloud/documents/openai?utm_source=github&utm_medium=referral&utm_campaign=evergreen&utm_content=gptimageqwencode_readme_service_docs). This is provided by Ace Data Cloud and is not an official GPT Image or Qwen endorsement.
+When you choose to spend on media, specify inputs, an explicitly permitted current model and a budget, then authorize **one** generation or edit. Preserve the returned `task_id`; query `gpt_image_get_task` with **id = that same task ID**. Pending means wait and query the same ID, never regenerate to poll. `finished_at` means terminal even on failure: inspect `response.error` / `response.success` and returned usable media URLs before claiming success. Do not switch models or add automatic paid retries. No paid result or billing validation is claimed here.
 
-[Upstream MCP implementation](https://github.com/AceDataCloud/OpenAIMCP) · [Official Qwen extension documentation](https://qwenlm.github.io/qwen-code-docs/en/users/extension/introduction/) · [Report a problem](https://github.com/AceDataCloud/GPTImageQwenCode/issues) · dev@acedata.cloud.
+## Troubleshooting and privacy
+
+- `uvx` not found / unsupported Python: install the runtime prerequisites and restart Qwen so PATH includes uvx. If a package download fails, check your approved uv index/network; keep the fixed package and dedicated profile.
+- Missing or extra tools: verify the RC2 tag and profile arguments, restart Qwen, and check for a same-name manual MCP override. Do not substitute the general hosted server.
+- 401 / 403: check the raw consumer Token, expiry and Allowed APIs; never publish the Token in a support log.
+- Pending, 429 or failure: preserve the response and original task ID; respect limits, without automatic generation retries.
+
+The Python package runs locally. Requested media inputs and the consumer Token go over HTTPS to the existing Ace API; stdio metadata discovery does not itself submit a media task. See [Privacy](PRIVACY.md), [current pricing](https://platform.acedata.cloud/models?utm_source=github&utm_medium=referral&utm_campaign=evergreen&utm_content=gptimageqwencode_readme_pricing) and [service documentation](https://platform.acedata.cloud/documents/openai?utm_source=github&utm_medium=referral&utm_campaign=evergreen&utm_content=gptimageqwencode_readme_service_docs). This is an Ace Data Cloud integration, not an official GPT Image or Qwen endorsement.
+
+[Published MCP implementation](https://github.com/AceDataCloud/OpenAIMCP) · [Validation and history](VALIDATION.md) · [Report an issue](https://github.com/AceDataCloud/GPTImageQwenCode/issues) · dev@acedata.cloud.

@@ -1,20 +1,28 @@
 {
   "name": "gpt-image-by-ace-data-cloud",
-  "version": "0.1.0-rc.1",
+  "version": "0.1.0-rc.2",
   "displayName": "GPT Image by Ace Data Cloud",
   "description": "Generate and edit GPT Image pictures through Ace Data Cloud, with async task retrieval.",
   "contextFileName": "QWEN.md",
   "mcpServers": {
     "gpt-image": {
-      "httpUrl": "https://openai.mcp.acedata.cloud/mcp",
-      "headers": {
-        "Authorization": "Bearer $ACE_GPT_IMAGE_API_TOKEN"
+      "command": "uvx",
+      "args": [
+        "--from",
+        "mcp-openai-pro==2026.10.19.5",
+        "mcp-openai-pro",
+        "--profile",
+        "gpt-image"
+      ],
+      "env": {
+        "ACEDATACLOUD_API_TOKEN": "$ACE_GPT_IMAGE_API_TOKEN"
       },
       "includeTools": [
-        "openai_list_image_models",
-        "openai_generate_image",
-        "openai_edit_image",
-        "openai_get_task"
+        "gpt_image_generate",
+        "gpt_image_edit",
+        "gpt_image_get_task",
+        "gpt_image_list_tasks",
+        "gpt_image_list_models"
       ]
     }
   },

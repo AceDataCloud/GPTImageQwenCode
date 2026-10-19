@@ -1,6 +1,6 @@
 # Privacy and cost
 
-This native Qwen extension configures only the GPT Image tools backed by Ace Data Cloud. The package does not collect telemetry or send your workspace automatically. Qwen may send tool inputs chosen by you and the API Token to `https://openai.mcp.acedata.cloud/mcp`; the hosted implementation performs the corresponding Ace API operations. Do not submit content you lack permission to process.
+This native Qwen extension configures only the GPT Image tools backed by Ace Data Cloud. The package does not collect telemetry or send your workspace automatically. Qwen launches the pinned published `mcp-openai-pro --profile gpt-image` package as a local stdio child. The sensitive Token is resolved only into that child's `ACEDATACLOUD_API_TOKEN`; requested business operations send the Token and chosen media inputs over HTTPS to `https://api.acedata.cloud`. Local initialization and schema discovery do not themselves submit media. The extension does not connect to the general hosted OpenAI server. Do not submit content you lack permission to process.
 
 The Token is entered through Qwen's sensitive extension setting. Qwen owns keychain/encrypted-file storage and its security settings; this source never includes a real credential. Keep Qwen and the operating system updated, avoid sharing credential files, and revoke the dedicated key from Ace Applications when no longer needed. Do not assume local disk encryption alone protects an unlocked account.
 
