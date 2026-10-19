@@ -1,0 +1,29 @@
+{
+  "name": "gpt-image-by-ace-data-cloud",
+  "version": "0.1.0-rc.1",
+  "displayName": "GPT Image by Ace Data Cloud",
+  "description": "Generate and edit GPT Image pictures through Ace Data Cloud, with async task retrieval.",
+  "contextFileName": "QWEN.md",
+  "mcpServers": {
+    "gpt-image": {
+      "httpUrl": "https://openai.mcp.acedata.cloud/mcp",
+      "headers": {
+        "Authorization": "Bearer $ACE_GPT_IMAGE_API_TOKEN"
+      },
+      "includeTools": [
+        "openai_list_image_models",
+        "openai_generate_image",
+        "openai_edit_image",
+        "openai_get_task"
+      ]
+    }
+  },
+  "settings": [
+    {
+      "name": "Ace Data Cloud API Token",
+      "description": "Paste your raw Ace API Token with GPT Image access. Get it from https://platform.acedata.cloud/console/applications?utm_source=github&utm_medium=referral&utm_campaign=evergreen&utm_content=gptimageqwencode_readme_api_key. Do not include Bearer. Source prerelease: use a synthetic placeholder until an official Qwen release with fix #14544 is verified.",
+      "envVar": "ACE_GPT_IMAGE_API_TOKEN",
+      "sensitive": true
+    }
+  ]
+}
