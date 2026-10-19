@@ -1,3 +1,15 @@
+# RC2 dedicated-profile contract (2026-10-20)
+
+RC2 replaces RC1's broad hosted endpoint/four legacy tools with the already published `mcp-openai-pro==2026.10.19.5 --profile gpt-image` stdio entry. PyPI's fixed wheel contains the dedicated five `gpt_image_*` tools and requires Python >=3.10. Qwen's declared tool filter is an exact additional allowlist, not a tool rename. No shared API/provider/billing logic is copied or changed.
+
+Validation command: `python3 -m unittest discover -s tests -v`. It verifies the native sensitive-setting mapping into child env, exact fixed package/profile and five-tool boundary, synchronized prerelease versions, both-language onboarding links/images/runtime prerequisites and same-task guidance. Runtime installation of the new published Git tag is a separate post-publication check, recorded in the Qwen Index report; no claim is made before that check runs.
+
+Real credentials remain restricted to a verified repair candidate or a later official fixed release. The unfixed official 0.25.2 accepts synthetic placeholders only; this transport change is not runtime GA. The earlier RC1 installed successfully but its dedicated-profile metadata was blocked. The historical four hosted-service metadata results and their partial output-log coverage stay unchanged. Before any new real-key test the execution fixture must pass synthetic late-leak/reader-completion tests. No model prompt, business tools/call, generation, billing or official marketplace acceptance is claimed.
+
+---
+
+The dated material below is historical RC1 validation; its hosted transport and old tool names are superseded by RC2.
+
 # Validation (2026-10-18)
 
 Official Qwen Code0.25.2 macOS x64; fake per-service secret and isolated profile. Native extension install, hidden prompt, manifest retained, masked setting listing, no plaintext secret in profile: PASS. Five independent packages installed from their immutable candidate GitHub archive URLs on one complete remote run; later network fetches were intermittent and local snapshots were used only for diagnosis.
