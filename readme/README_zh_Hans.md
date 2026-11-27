@@ -1,8 +1,10 @@
 # GPT Image by Ace Data Cloud：Qwen Code 原生扩展
 
+<img src="../_assets/icon.png" alt="GPT Image" width="96">
+
 通过 Ace Data Cloud 使用 GPT Image 生成、编辑图片并查询原异步任务。独立原生扩展复用已发布的 **GPT Image 专用 stdio profile**，固定包 `mcp-openai-pro==2026.10.19.5`；不安装其他服务，也不新增 LLM Provider。
 
-**源码预发行 `0.1.0-rc.2`。** RC1 的通用 OpenAI 远程入口与四项旧工具，现改为已发布专用五工具入口；没有新建服务器或静默回退通用入口，旧 RC1 tag 不变。源码预发行不代表 Qwen 默认市场收录或真实媒体 GA。
+**源码预发行 `0.1.0-rc.3`。** RC1 的通用 OpenAI 远程入口与四项旧工具，现改为已发布专用五工具入口；没有新建服务器或静默回退通用入口，旧 RC1 tag 不变。源码预发行不代表 Qwen 默认市场收录或真实媒体 GA。
 
 [English](../README.md) · [注册/登录](https://platform.acedata.cloud/console/applications?utm_source=github&utm_medium=referral&utm_campaign=evergreen&utm_content=gptimageqwencode_readme_signup) · [当前价格](https://platform.acedata.cloud/models?utm_source=github&utm_medium=referral&utm_campaign=evergreen&utm_content=gptimageqwencode_readme_pricing)
 
@@ -12,7 +14,7 @@
 
 ```bash
 uvx --from mcp-openai-pro==2026.10.19.5 mcp-openai-pro --version
-qwen extensions install AceDataCloud/GPTImageQwenCode --ref v0.1.0-rc.2
+qwen extensions install AceDataCloud/GPTImageQwenCode --ref v0.1.0-rc.3
 ```
 
 原生 manifest 启动 `uvx --from mcp-openai-pro==2026.10.19.5 mcp-openai-pro --profile gpt-image`。安装前检查本地进程与所需权限；它通过本地 stdio 与 Qwen 通信，用户选定的业务操作仍使用现有 Ace API。通用 OpenAI URL 没有独立的 GPT Image 托管 profile，下载或启动失败时不能改成那个 URL。
