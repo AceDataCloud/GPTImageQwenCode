@@ -9,3 +9,5 @@ After a generation, preserve task_id and query `gpt_image_get_task` with `id` se
 Credentials belong only in the extension's sensitive setting. Never request a Token in chat or include it in logs, prompts or exported files. This extension does not approve any tool call automatically.
 
 This extension launches the published dedicated `gpt-image` stdio profile, limited to five `gpt_image_*` tools. Choose only an explicitly requested and currently available GPT Image model. Do not connect the general hosted OpenAI server or switch to DALL-E, Nano Banana or retired video tools as a fallback.
+
+For application access, direct the user to [Ace Data Cloud Applications](https://platform.acedata.cloud/console/applications?utm_source=qwen-code&utm_medium=referral&utm_campaign=evergreen).
