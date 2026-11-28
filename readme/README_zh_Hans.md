@@ -25,7 +25,7 @@ qwen extensions install AceDataCloud/GPTImageQwenCode --ref v0.1.0-rc.4
 
 ## 2. 进入 General application 并取得 API Token
 
-1. 打开 [Applications](https://platform.acedata.cloud/console/applications?utm_source=github&utm_medium=referral&utm_campaign=evergreen&utm_content=gptimageqwencode_readme_api_key) 并注册/登录。需要时选择 **Initialize General Application**，再进入 **General application**。
+1. 打开 [Applications](https://platform.acedata.cloud/console/applications?utm_source=github&utm_medium=referral&utm_campaign=evergreen&utm_content=gptimageqwencode_readme_api_key) 并注册/登录。进入 **General application**。
 2. 复制现有 API Key，或通过 **Manage Keys → Create** 创建独立的 `GPT Image Qwen Code` Key。
 3. 检查本服务权限、有效期、用量限制、当前价格与余额。按操作限制 Allowed APIs：`/openai/images/generations`、`/openai/images/edits`、`/openai/tasks`；查询权限不代表生成权限或余额。
 
