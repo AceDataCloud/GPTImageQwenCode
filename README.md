@@ -1,10 +1,10 @@
-# GPT Image by Ace Data Cloud — Qwen Code extension
+# GPT Image — Qwen Code extension
 
 <img src="_assets/icon.png" alt="GPT Image" width="96">
 
 Generate and edit GPT Image pictures through Ace Data Cloud, and retrieve the original async task. This independent native extension runs the **existing dedicated GPT Image stdio profile** from the published `mcp-openai-pro==2026.10.19.5` package. It installs no other service and adds no LLM provider.
 
-**Source prerelease `0.1.0-rc.3`.** RC1 used the general hosted OpenAI endpoint and four older tools. RC2 replaces that configuration with the published five-tool profile; it does not create a server or silently fall back to the general endpoint. Old RC1 tags are unchanged. This is not a default Qwen marketplace listing or a production-media GA claim.
+**Source prerelease `0.1.0-rc.4`.** RC1 used the general hosted OpenAI endpoint and four older tools. RC2 replaces that configuration with the published five-tool profile; it does not create a server or silently fall back to the general endpoint. Old RC1 tags are unchanged. This is not a default Qwen marketplace listing or a production-media GA claim.
 
 [简体中文](readme/README_zh_Hans.md) · [Register / sign in](https://platform.acedata.cloud/console/applications?utm_source=github&utm_medium=referral&utm_campaign=evergreen&utm_content=gptimageqwencode_readme_signup) · [Current pricing](https://platform.acedata.cloud/models?utm_source=github&utm_medium=referral&utm_campaign=evergreen&utm_content=gptimageqwencode_readme_pricing)
 
@@ -14,7 +14,7 @@ Install **Node.js 22+**, [uv](https://docs.astral.sh/uv/getting-started/installa
 
 ```bash
 uvx --from mcp-openai-pro==2026.10.19.5 mcp-openai-pro --version
-qwen extensions install AceDataCloud/GPTImageQwenCode --ref v0.1.0-rc.3
+qwen extensions install AceDataCloud/GPTImageQwenCode --ref v0.1.0-rc.4
 ```
 
 The native manifest launches `uvx --from mcp-openai-pro==2026.10.19.5 mcp-openai-pro --profile gpt-image`. Review its process and permissions before installing. It communicates with Qwen over local stdio; the package uses the existing Ace API for requested business operations. There is no dedicated hosted GPT Image profile at the general OpenAI URL. Do not replace this entry with that URL if a download or process launch fails.

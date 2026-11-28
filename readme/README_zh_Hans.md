@@ -1,4 +1,4 @@
-# GPT Image by Ace Data Cloud：Qwen Code 原生扩展
+# GPT Image：Qwen Code 原生扩展
 
 <img src="../_assets/icon.png" alt="GPT Image" width="96">
 
@@ -14,7 +14,7 @@
 
 ```bash
 uvx --from mcp-openai-pro==2026.10.19.5 mcp-openai-pro --version
-qwen extensions install AceDataCloud/GPTImageQwenCode --ref v0.1.0-rc.3
+qwen extensions install AceDataCloud/GPTImageQwenCode --ref v0.1.0-rc.4
 ```
 
 原生 manifest 启动 `uvx --from mcp-openai-pro==2026.10.19.5 mcp-openai-pro --profile gpt-image`。安装前检查本地进程与所需权限；它通过本地 stdio 与 Qwen 通信，用户选定的业务操作仍使用现有 Ace API。通用 OpenAI URL 没有独立的 GPT Image 托管 profile，下载或启动失败时不能改成那个 URL。

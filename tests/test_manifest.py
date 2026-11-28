@@ -40,7 +40,7 @@ class ManifestTests(unittest.TestCase):
             self.assertIn('task_id', content)
             self.assertIn('Python 3.10+', content)
             self.assertIn('uvx', content)
-            self.assertIn('--ref v0.1.0-rc.3', content)
+            self.assertIn('--ref v' + json.loads((ROOT / 'qwen-extension.json').read_text())['version'], content)
             self.assertIn('mcp-openai-pro==2026.10.19.5', content)
             self.assertIn('#14544', content)
             for tool in GPT_TOOLS:
@@ -55,7 +55,7 @@ class ManifestTests(unittest.TestCase):
     def test_release_versions_match(self):
         manifest = json.loads((ROOT / 'qwen-extension.json').read_text())
         package = json.loads((ROOT / 'package.json').read_text())
-        self.assertEqual(manifest['version'], '0.1.0-rc.3')
+        self.assertRegex(manifest['version'], r'^0\.1\.0-rc\.[1-9]\d*$')
         self.assertEqual(package['version'], manifest['version'])
 
     def test_commands_keep_the_dedicated_surface(self):
