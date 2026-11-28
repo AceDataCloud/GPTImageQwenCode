@@ -25,7 +25,7 @@ An optional [Ace catalog](https://github.com/AceDataCloud/AceDataCloudQwenCode) 
 
 ## 2. Open General application and get an API Token
 
-1. Open [Applications](https://platform.acedata.cloud/console/applications?utm_source=github&utm_medium=referral&utm_campaign=evergreen&utm_content=gptimageqwencode_readme_api_key) and register/sign in. If needed, choose **Initialize General Application**, then open **General application**.
+1. Open [Applications](https://platform.acedata.cloud/console/applications?utm_source=github&utm_medium=referral&utm_campaign=evergreen&utm_content=gptimageqwencode_readme_api_key) and register/sign in. Open **General application**.
 2. Copy an existing API Key or use **Manage Keys → Create** to create a dedicated `GPT Image Qwen Code` key.
 3. Check current GPT Image permissions, expiry, limits, price and balance. Restrict Allowed APIs to the operations you intend to use: `/openai/images/generations`, `/openai/images/edits` and `/openai/tasks`. Query permission does not grant generation permission or balance.
 
