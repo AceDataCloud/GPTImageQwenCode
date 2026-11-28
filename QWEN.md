@@ -1,4 +1,4 @@
-# GPT Image by Ace Data Cloud
+# GPT Image
 
 Use this extension's gpt-image MCP tools for GPT Image only. This is an Ace Data Cloud integration, not an official GPT Image or Qwen endorsement.
 
